@@ -20,3 +20,9 @@ await calculator.init();
 calculate.annualEarning();
 calculate.annualEarning();
 ```
+
+## Development Mode
+
+```
+- npm run dev
+```

@@ -1,11 +1,12 @@
 {
   "name": "stackcalculator",
-  "version": "1.0.0",
+  "version": "1.0.2",
   "description": "",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "dev": "NODE_ENV=dev node index.js"
+    "dev": "NODE_ENV=dev node index.js",
+    "docs": "node_modules/.bin/jsdoc -c jsdoc.json"
   },
   "author": "",
   "license": "ISC",
@@ -16,5 +17,9 @@
   "volta": {
     "node": "14.15.3",
     "npm": "6.14.9"
+  },
+  "devDependencies": {
+    "docdash": "^1.2.0",
+    "jsdoc": "^3.6.6"
   }
 }
