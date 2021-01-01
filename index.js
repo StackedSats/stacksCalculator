@@ -4,22 +4,32 @@ const numberOfStxBlockPerRewardCycle = 2000;
 const stxBlockPerDay = 144;
 const liquidStxSupply = 852000000;
 const percentageOfSupplyStacked = 50;
+const numberOfMiners = 10;
+const minersShareOfExcessValue = 15;
 
 const axios = require("axios");
 require("dotenv").config();
 
-console.log(process.env.coinmarketcap);
 class Calculator {
   stxusd;
   btcusd;
   stxTransactionFee;
   btcTxFee;
+  coinMarketCapApiKey;
+
+  constructor(apiKey) {
+    if (process.env.NODE_ENV !== "dev") this.coinMarketCapApiKey = apiKey;
+    else {
+      this.coinMarketCapApiKey = process.env.coinmarketcap;
+    }
+    console.log(this.coinMarketCapApiKey);
+  }
 
   async init() {
     const btc = axios({
       method: "get",
       headers: {
-        "X-CMC_PRO_API_KEY": process.env.coinmarketcap,
+        "X-CMC_PRO_API_KEY": this.coinMarketCapApiKey,
       },
       url: `https://pro-api.coinmarketcap.com/v1/cryptocurrency/quotes/latest?symbol=BTC`,
     });
@@ -27,7 +37,7 @@ class Calculator {
     const stx = axios({
       method: "get",
       headers: {
-        "X-CMC_PRO_API_KEY": process.env.coinmarketcap,
+        "X-CMC_PRO_API_KEY": this.coinMarketCapApiKey,
       },
       url: `https://pro-api.coinmarketcap.com/v1/cryptocurrency/quotes/latest?symbol=STX`,
     });
@@ -65,8 +75,24 @@ class Calculator {
     return 0.00000001 * this.btcusd * this.btcTxFee * this.poxTransactionSize();
   }
 
+  btcTxCose() {
+    return numberOfMiners * this.txCostPerMinerPerBlock;
+  }
+
+  excessValueToBeDistributed() {
+    return totalReward() - this.btcTxCose();
+  }
+
+  minersShare() {
+    return minersShareOfExcessValue * this.excessValueToBeDistributed();
+  }
+
+  stackersShare() {
+    return this.excessValueToBeDistributed - this.minersShare();
+  }
+
   sharePerStackingAddress() {
-    return this.totalReward() / stackingAddressPerBlock;
+    return this.stackersShare() / stackingAddressPerBlock;
   }
 
   slotsAvalaiblePerRewardCycle() {
@@ -115,5 +141,7 @@ class Calculator {
   }
 }
 
-const obj = new Calculator();
-obj.init();
+module.exports = Calculator;
+
+// const obj = new Calculator();
+// obj.init();
