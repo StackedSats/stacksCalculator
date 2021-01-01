@@ -4,8 +4,6 @@ const numberOfStxBlockPerRewardCycle = 2000;
 const stxBlockPerDay = 144;
 const liquidStxSupply = 852000000;
 const percentageOfSupplyStacked = 0.5;
-const numberOfMiners = 10;
-const minersShareOfExcessValue = 0.15;
 
 const axios = require("axios");
 require("dotenv").config();
@@ -20,13 +18,23 @@ class Calculator {
   stxTransactionFee;
   btcTxFee;
   coinMarketCapApiKey;
+  numberOfMiners = 10;
+  minersShareOfExcessValue = 0.15;
 
   /**
    * @contructor
    * @param {string} apiKey The Api Key for coinmarketcap
+   * @param {number=} [numMin=10] If the user wants to specify the number of minros
+   * @param {minShare=} [minShare=0.15] To change the miners share of excess values.
    */
 
-  constructor(apiKey) {
+  constructor(apiKey, numMin, minShare) {
+    if (numMin) {
+      this.numberOfMiners = numMin;
+    }
+    if (minShare) {
+      this.minersShareOfExcessValue = minShare;
+    }
     try {
       if (apiKey) {
         this.coinMarketCapApiKey = apiKey;
@@ -78,8 +86,7 @@ class Calculator {
           this.btcusd = result[1].data.data.STX.quote.USD.price;
           this.stxTransactionFee = result[2].data;
           this.btcTxFee = result[3].data.estimates[30].total.p2wpkh.usd;
-          // console.log(this);
-          console.log(obj.annualEarningPercentage());
+          // console.log(obj.annualEarningPercentage());
         }
       );
     } catch (e) {
@@ -101,7 +108,7 @@ class Calculator {
   }
 
   btcTxCose() {
-    return numberOfMiners * this.txCostPerMinerPerBlock();
+    return this.numberOfMiners * this.txCostPerMinerPerBlock();
   }
 
   excessValueToBeDistributed() {
@@ -114,7 +121,7 @@ class Calculator {
    */
 
   minersShare() {
-    return minersShareOfExcessValue * this.excessValueToBeDistributed();
+    return this.minersShareOfExcessValue * this.excessValueToBeDistributed();
   }
 
   /**
