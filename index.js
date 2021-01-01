@@ -1,18 +1,60 @@
-const stxusd = 0.162;
-const btcusd = 10900;
-const btcTxFee = 82;
 const blockReward = 1000;
-const stxTransactionFee = 100;
 const stackingAddressPerBlock = 2;
 const numberOfStxBlockPerRewardCycle = 2000;
 const stxBlockPerDay = 144;
 const liquidStxSupply = 852000000;
 const percentageOfSupplyStacked = 50;
 
+const axios = require("axios");
+require("dotenv").config();
+
+console.log(process.env.coinmarketcap);
 class Calculator {
-  constructor() {}
+  stxusd;
+  btcusd;
+  stxTransactionFee;
+  btcTxFee;
+
+  async init() {
+    const btc = axios({
+      method: "get",
+      headers: {
+        "X-CMC_PRO_API_KEY": process.env.coinmarketcap,
+      },
+      url: `https://pro-api.coinmarketcap.com/v1/cryptocurrency/quotes/latest?symbol=BTC`,
+    });
+
+    const stx = axios({
+      method: "get",
+      headers: {
+        "X-CMC_PRO_API_KEY": process.env.coinmarketcap,
+      },
+      url: `https://pro-api.coinmarketcap.com/v1/cryptocurrency/quotes/latest?symbol=STX`,
+    });
+
+    const stxTransferFee = axios({
+      method: "get",
+      url: "https://stacks-node-api.blockstack.org/v2/fees/transfer",
+    });
+
+    const btcTxFee = axios({
+      method: "get",
+      url: "https://bitcoiner.live/api/fees/estimates/latest?confidence=0.8",
+    });
+    const prices = Promise.all([btc, stx, stxTransferFee, btcTxFee]).then(
+      (result) => {
+        this.stxusd = result[0].data.data.BTC.quote.USD.price;
+        this.btcusd = result[1].data.data.STX.quote.USD.price;
+        this.stxTransactionFee = result[2].data;
+        this.btcTxFee = result[3].data.estimates[30].total.p2wpkh.usd;
+        // console.log(this);
+        console.log(obj.annualEarningPercentage());
+      }
+    );
+  }
+
   totalReward() {
-    return (blockReward + stxTransactionFee) * stxusd;
+    return (blockReward + this.stxTransactionFee) * this.stxusd;
   }
 
   poxTransactionSize() {
@@ -20,7 +62,7 @@ class Calculator {
   }
 
   txCostPerMinerPerBlock() {
-    return 0.00000001 * btcusd * btcTxFee * this.poxTransactionSize();
+    return 0.00000001 * this.btcusd * this.btcTxFee * this.poxTransactionSize();
   }
 
   sharePerStackingAddress() {
@@ -50,7 +92,7 @@ class Calculator {
   }
 
   dollarValue() {
-    return this.userHolding() * stxusd;
+    return this.userHolding() * this.stxusd;
   }
 
   usersSlotsPerCycle() {
@@ -61,12 +103,12 @@ class Calculator {
     return (
       (this.usersSlotsPerCycle() * this.sharePerStackingAddress() * 365) /
       14 /
-      btcusd
+      this.btcusd
     );
   }
 
   annualEarning() {
-    return this.annualEarningInBTC() * btcusd;
+    return this.annualEarningInBTC() * this.btcusd;
   }
   annualEarningPercentage() {
     return this.annualEarning() / this.dollarValue();
@@ -74,4 +116,4 @@ class Calculator {
 }
 
 const obj = new Calculator();
-console.log(obj.annualEarningPercentage());
+obj.init();
