@@ -2,7 +2,7 @@
 
 ## Installation
 
-`npm i stackcalculator`
+`npm i stxcalculator`
 
 ## Usage
 
