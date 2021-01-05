@@ -22,13 +22,16 @@ class Calculator {
   coinMarketCapApiKey;
   numberOfMiners = 10;
   minersShareOfExcessValue = 0.15;
-
-  // need formulae for this.
   blockReward = 1000;
   stackingAddressPerBlock = 2;
   numberOfStxBlockPerRewardCycle = 2000;
   stxBlockPerDay = 144;
 
+  /**
+   * User STX Stacking amount
+   * @type {number}
+   */
+  userHolding;
   /**
    * This is the liquid STX Supply
    */
@@ -100,6 +103,7 @@ class Calculator {
           this.btcusd = result[1].data.data.STX.quote.USD.price;
           this.stxTransactionFee = result[2].data;
           this.btcTxFee = result[3].data.estimates[30].total.p2wpkh.usd;
+          this.annualEarning();
         }
       );
     } catch (e) {
@@ -107,6 +111,8 @@ class Calculator {
       Promise.reject("Something went wrong");
     }
   }
+
+  //************************************************************************
 
   // methods to modify global class variables
 
@@ -143,6 +149,8 @@ class Calculator {
   BTCTransferFee(value) {
     this.btcTxFee = value;
   }
+
+  // *****************************************************************************
 
   totalReward() {
     return (this.blockReward + this.stxTransactionFee) * this.stxusd;
@@ -202,16 +210,21 @@ class Calculator {
     );
   }
 
-  userHolding() {
-    return this.minStackingSize() * 10;
+  usersSlotsPerCycle() {
+    console.log(this.userHolding, this.minStackingSize());
+    return Math.floor(this.userHolding / this.minStackingSize());
+  }
+
+  /**
+   * Function to set the stacking value.
+   * @param {number} value Stacking Value
+   */
+  setUserHolding(value) {
+    this.userHolding = value;
   }
 
   dollarValue() {
     return this.userHolding() * this.stxusd;
-  }
-
-  usersSlotsPerCycle() {
-    return Math.floor(this.userHolding() / this.minStackingSize());
   }
 
   /**
@@ -240,7 +253,22 @@ class Calculator {
   }
 }
 
-module.exports = Calculator;
+/**
+ * Usage
+ * @example
+ *  const obj = new Calculator();
+ *  obj.BTCTokenPrice(1000);
+ *  obj.STXTokenPrice(10);
+ *  obj.STXTransferFee(30);
+ *  obj.setUserHolding(100000);
+ *  console.log(obj.annualEarning());
+ */
 
-const obj = new Calculator();
-obj.init();
+/**
+ * @example
+ * const obj = new Calculator();
+ * obj.init();
+ * console.log(obj.annualEarning())
+ */
+
+module.exports = Calculator;
