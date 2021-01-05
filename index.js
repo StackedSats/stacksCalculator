@@ -2,7 +2,21 @@ const axios = require("axios");
 require("dotenv").config();
 
 /**
- * @class
+ *
+ * Usage
+ * @example
+ *  const obj = new Calculator();
+ *  obj.BTCTokenPrice(1000);
+ *  obj.STXTokenPrice(10);
+ *  obj.STXTransferFee(30);
+ *  obj.setUserHolding(100000);
+ *  obj.BTCTransferFee(10);
+ *  console.log(obj.annualEarning());
+ *
+ * @example
+ * const obj = new Calculator();
+ * obj.init();
+ * console.log(obj.annualEarning())
  */
 
 class Calculator {
@@ -169,6 +183,7 @@ class Calculator {
   }
 
   excessValueToBeDistributed() {
+    // console.log(this.totalReward(), this.btcTxCose());
     return this.totalReward() - this.btcTxCose();
   }
 
@@ -211,7 +226,6 @@ class Calculator {
   }
 
   usersSlotsPerCycle() {
-    console.log(this.userHolding, this.minStackingSize());
     return Math.floor(this.userHolding / this.minStackingSize());
   }
 
@@ -253,22 +267,12 @@ class Calculator {
   }
 }
 
-/**
- * Usage
- * @example
- *  const obj = new Calculator();
- *  obj.BTCTokenPrice(1000);
- *  obj.STXTokenPrice(10);
- *  obj.STXTransferFee(30);
- *  obj.setUserHolding(100000);
- *  console.log(obj.annualEarning());
- */
-
-/**
- * @example
- * const obj = new Calculator();
- * obj.init();
- * console.log(obj.annualEarning())
- */
-
 module.exports = Calculator;
+
+const obj = new Calculator();
+obj.BTCTokenPrice(1000);
+obj.STXTokenPrice(10);
+obj.STXTransferFee(30);
+obj.setUserHolding(100000);
+obj.BTCTransferFee(10);
+console.log(obj.annualEarning());
