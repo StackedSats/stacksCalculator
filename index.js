@@ -1,10 +1,3 @@
-const blockReward = 1000;
-const stackingAddressPerBlock = 2;
-const numberOfStxBlockPerRewardCycle = 2000;
-const stxBlockPerDay = 144;
-const liquidStxSupply = 852000000;
-const percentageOfSupplyStacked = 0.5;
-
 const axios = require("axios");
 require("dotenv").config();
 
@@ -13,7 +6,16 @@ require("dotenv").config();
  */
 
 class Calculator {
+  /**
+   * STX/USD Price
+   * @type {number}
+   */
   stxusd;
+
+  /**
+   * BTC/USD Price
+   * @type  {number}
+   */
   btcusd;
   stxTransactionFee;
   btcTxFee;
@@ -21,8 +23,20 @@ class Calculator {
   numberOfMiners = 10;
   minersShareOfExcessValue = 0.15;
 
+  // need formulae for this.
+  blockReward = 1000;
+  stackingAddressPerBlock = 2;
+  numberOfStxBlockPerRewardCycle = 2000;
+  stxBlockPerDay = 144;
+
   /**
-   * @contructor
+   * This is the liquid STX Supply
+   */
+  liquidStxSupply = 852000000;
+  percentageOfSupplyStacked = 0.5;
+
+  /**
+   * @constructor
    * @param {string} apiKey The Api Key for coinmarketcap
    * @param {number=} [numMin=10] If the user wants to specify the number of minros
    * @param {minShare=} [minShare=0.15] To change the miners share of excess values.
@@ -86,7 +100,6 @@ class Calculator {
           this.btcusd = result[1].data.data.STX.quote.USD.price;
           this.stxTransactionFee = result[2].data;
           this.btcTxFee = result[3].data.estimates[30].total.p2wpkh.usd;
-          // console.log(obj.annualEarningPercentage());
         }
       );
     } catch (e) {
@@ -95,12 +108,40 @@ class Calculator {
     }
   }
 
+  // methods to modify global class variables
+
+  /**
+   * This function Sets the desired STX Token Price
+   * @param {*} value New STX value
+   */
+
+  STXTokenPrice(value) {
+    this.stxusd = value;
+  }
+
+  /**
+   * This function sets the desired BTC Token Price
+   * @param {number} value New BTC value
+   */
+
+  BTCTokenPrice(value) {
+    this.btcusd = value;
+  }
+
+  /**
+   * This function sets the STX transfer fee
+   * @param {number} value
+   */
+  STXTransferFee(value) {
+    this.stxTransactionFee = value;
+  }
+
   totalReward() {
-    return (blockReward + this.stxTransactionFee) * this.stxusd;
+    return (this.blockReward + this.stxTransactionFee) * this.stxusd;
   }
 
   poxTransactionSize() {
-    return (stackingAddressPerBlock + 1) * 33 + 250;
+    return (this.stackingAddressPerBlock + 1) * 33 + 250;
   }
 
   txCostPerMinerPerBlock() {
@@ -132,23 +173,23 @@ class Calculator {
   }
 
   sharePerStackingAddress() {
-    return this.stackersShare() / stackingAddressPerBlock;
+    return this.stackersShare() / this.stackingAddressPerBlock;
   }
 
   slotsAvalaiblePerRewardCycle() {
-    return numberOfStxBlockPerRewardCycle * stackingAddressPerBlock;
+    return this.numberOfStxBlockPerRewardCycle * this.stackingAddressPerBlock;
   }
 
   lengthOfRewardCycle() {
-    return numberOfStxBlockPerRewardCycle / stxBlockPerDay;
+    return this.numberOfStxBlockPerRewardCycle / this.stxBlockPerDay;
   }
 
   minStackingSize() {
     return Math.min(
-      percentageOfSupplyStacked < 0.25
-        ? (liquidStxSupply / this.slotsAvalaiblePerRewardCycle()) * 0.25
-        : (liquidStxSupply / this.slotsAvalaiblePerRewardCycle()) *
-            percentageOfSupplyStacked,
+      this.percentageOfSupplyStacked < 0.25
+        ? (this.liquidStxSupply / this.slotsAvalaiblePerRewardCycle()) * 0.25
+        : (this.liquidStxSupply / this.slotsAvalaiblePerRewardCycle()) *
+            this.percentageOfSupplyStacked,
       10000
     );
   }
@@ -193,5 +234,5 @@ class Calculator {
 
 module.exports = Calculator;
 
-// const obj = new Calculator();
-// obj.init();
+const obj = new Calculator();
+obj.init();
