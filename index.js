@@ -112,7 +112,7 @@ class Calculator {
 
   /**
    * This function Sets the desired STX Token Price
-   * @param {*} value New STX value
+   * @param {number} value New STX value
    */
 
   STXTokenPrice(value) {
@@ -134,6 +134,14 @@ class Calculator {
    */
   STXTransferFee(value) {
     this.stxTransactionFee = value;
+  }
+
+  /**
+   * This function sets the STX transfer fee
+   * @param {number} value
+   */
+  BTCTransferFee(value) {
+    this.btcTxFee = value;
   }
 
   totalReward() {
