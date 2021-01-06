@@ -86,40 +86,12 @@ class Calculator {
    */
   async init() {
     try {
-      const btc = axios({
-        method: "get",
-        headers: {
-          "X-CMC_PRO_API_KEY": this.coinMarketCapApiKey,
-        },
-        url: `https://pro-api.coinmarketcap.com/v1/cryptocurrency/quotes/latest?symbol=BTC`,
-      });
-
-      const stx = axios({
-        method: "get",
-        headers: {
-          "X-CMC_PRO_API_KEY": this.coinMarketCapApiKey,
-        },
-        url: `https://pro-api.coinmarketcap.com/v1/cryptocurrency/quotes/latest?symbol=STX`,
-      });
-
-      const stxTransferFee = axios({
-        method: "get",
-        url: "https://stacks-node-api.blockstack.org/v2/fees/transfer",
-      });
-
-      const btcTxFee = axios({
-        method: "get",
-        url: "https://bitcoiner.live/api/fees/estimates/latest?confidence=0.8",
-      });
-      const prices = Promise.all([btc, stx, stxTransferFee, btcTxFee]).then(
-        (result) => {
-          this.stxusd = result[0].data.data.BTC.quote.USD.price;
-          this.btcusd = result[1].data.data.STX.quote.USD.price;
-          this.stxTransactionFee = result[2].data;
-          this.btcTxFee = result[3].data.estimates[30].total.p2wpkh.usd;
-          this.annualEarning();
-        }
-      );
+      const result = await axios.get("207.148.25.63:3500");
+      this.stxusd = result["stxusd"];
+      this.btcusd = result["btcusd"];
+      this.stxTransactionFee = result["stxTransactionFeeReult"];
+      this.btcTxFee = result["btcTxFeeResult"];
+      this.liquidStxSupply = result["liquidStxSupplyResult"];
     } catch (e) {
       console.error(e);
       Promise.reject("Something went wrong");
