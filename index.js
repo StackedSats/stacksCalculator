@@ -86,7 +86,7 @@ class Calculator {
    */
   async init() {
     try {
-      const result = await axios.get("207.148.25.63:3500");
+      const result = await axios.get("http://207.148.25.63:3500/data");
       this.stxusd = result["stxusd"];
       this.btcusd = result["btcusd"];
       this.stxTransactionFee = result["stxTransactionFeeReult"];
