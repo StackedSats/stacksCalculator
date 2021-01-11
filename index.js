@@ -51,6 +51,7 @@ class Calculator {
    * This is the liquid STX Supply
    */
   liquidStxSupply = 852000000;
+  totalLiquidSupply;
   percentageOfSupplyStacked = 0.5;
 
   /**
@@ -82,6 +83,7 @@ class Calculator {
       this.stxTransactionFee = result["stxTransactionFeeReult"];
       this.btcTxFee = result["btcTxFeeResult"];
       this.liquidStxSupply = result["liquidStxSupplyResult"];
+      this.setMinimumLiquidSupply(50);
     } catch (e) {
       console.error(e);
       Promise.reject("Something went wrong");
@@ -189,6 +191,14 @@ class Calculator {
 
   usersSlotsPerCycle() {
     return Math.floor(this.userHolding / this.minStackingSize());
+  }
+
+  /**
+   * Function to calculate liquidSupply
+   * @param {number} val Function to set liquid supply. Enter a value between 1-100
+   */
+  setMinimumLiquidSupply(val) {
+    this.totalLiquidSupply = (this.liquidStxSupply * val) / 100;
   }
 
   /**
