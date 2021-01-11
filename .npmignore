@@ -1,3 +1,4 @@
 .env.dev
 .gitignore
 docs
+server

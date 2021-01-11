@@ -63,7 +63,7 @@
     <h2>Constructor</h2>
     
 
-    <h4 class="name" id="Calculator"><span class="type-signature"></span>new Calculator<span class="signature">(apiKey, numMin<span class="signature-attributes">opt</span>, minShare<span class="signature-attributes">opt</span>)</span><span class="type-signature"></span></h4>
+    <h4 class="name" id="Calculator"><span class="type-signature"></span>new Calculator<span class="signature">(numMin<span class="signature-attributes">opt</span>, minShare<span class="signature-attributes">opt</span>)</span><span class="type-signature"></span></h4>
 
     
 
@@ -75,7 +75,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="index.js.html">index.js</a>, <a href="index.js.html#line22">line 22</a>
+        <a href="index.js.html">index.js</a>, <a href="index.js.html#line23">line 23</a>
     </li></ul></dd>
     
 
@@ -133,7 +133,8 @@
  console.log(obj.annualEarning());</code></pre>
 
     <pre class="prettyprint"><code>const obj = new Calculator();
-obj.init();
+await obj.init();
+obj.setUserHolding(100000);
 console.log(obj.annualEarning())</code></pre>
 
 
@@ -164,41 +165,6 @@ console.log(obj.annualEarning())</code></pre>
     </thead>
 
     <tbody>
-    
-
-        <tr>
-            
-                <td class="name"><code>apiKey</code></td>
-            
-
-            <td class="type">
-            
-                
-<span class="param-type">string</span>
-
-
-            
-            </td>
-
-            
-                <td class="attributes">
-                
-
-                
-
-                
-                </td>
-            
-
-            
-                <td class="default">
-                
-                </td>
-            
-
-            <td class="description last"><p>The Api Key for coinmarketcap</p></td>
-        </tr>
-
     
 
         <tr>
@@ -331,7 +297,7 @@ console.log(obj.annualEarning())</code></pre>
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="index.js.html">index.js</a>, <a href="index.js.html#line33">line 33</a>
+        <a href="index.js.html">index.js</a>, <a href="index.js.html#line34">line 34</a>
     </li></ul></dd>
     
 
@@ -404,7 +370,7 @@ console.log(obj.annualEarning())</code></pre>
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="index.js.html">index.js</a>, <a href="index.js.html#line52">line 52</a>
+        <a href="index.js.html">index.js</a>, <a href="index.js.html#line53">line 53</a>
     </li></ul></dd>
     
 
@@ -467,7 +433,7 @@ console.log(obj.annualEarning())</code></pre>
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="index.js.html">index.js</a>, <a href="index.js.html#line27">line 27</a>
+        <a href="index.js.html">index.js</a>, <a href="index.js.html#line28">line 28</a>
     </li></ul></dd>
     
 
@@ -540,7 +506,7 @@ console.log(obj.annualEarning())</code></pre>
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="index.js.html">index.js</a>, <a href="index.js.html#line48">line 48</a>
+        <a href="index.js.html">index.js</a>, <a href="index.js.html#line49">line 49</a>
     </li></ul></dd>
     
 
@@ -623,7 +589,7 @@ console.log(obj.annualEarning())</code></pre>
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="index.js.html">index.js</a>, <a href="index.js.html#line262">line 262</a>
+        <a href="index.js.html">index.js</a>, <a href="index.js.html#line224">line 224</a>
     </li></ul></dd>
     
 
@@ -732,7 +698,7 @@ console.log(obj.annualEarning())</code></pre>
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="index.js.html">index.js</a>, <a href="index.js.html#line249">line 249</a>
+        <a href="index.js.html">index.js</a>, <a href="index.js.html#line211">line 211</a>
     </li></ul></dd>
     
 
@@ -841,7 +807,7 @@ console.log(obj.annualEarning())</code></pre>
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="index.js.html">index.js</a>, <a href="index.js.html#line147">line 147</a>
+        <a href="index.js.html">index.js</a>, <a href="index.js.html#line109">line 109</a>
     </li></ul></dd>
     
 
@@ -977,7 +943,7 @@ console.log(obj.annualEarning())</code></pre>
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="index.js.html">index.js</a>, <a href="index.js.html#line163">line 163</a>
+        <a href="index.js.html">index.js</a>, <a href="index.js.html#line125">line 125</a>
     </li></ul></dd>
     
 
@@ -1113,7 +1079,7 @@ console.log(obj.annualEarning())</code></pre>
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="index.js.html">index.js</a>, <a href="index.js.html#line87">line 87</a>
+        <a href="index.js.html">index.js</a>, <a href="index.js.html#line75">line 75</a>
     </li></ul></dd>
     
 
@@ -1200,7 +1166,7 @@ console.log(obj.annualEarning())</code></pre>
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="index.js.html">index.js</a>, <a href="index.js.html#line195">line 195</a>
+        <a href="index.js.html">index.js</a>, <a href="index.js.html#line157">line 157</a>
     </li></ul></dd>
     
 
@@ -1297,7 +1263,7 @@ console.log(obj.annualEarning())</code></pre>
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="index.js.html">index.js</a>, <a href="index.js.html#line236">line 236</a>
+        <a href="index.js.html">index.js</a>, <a href="index.js.html#line198">line 198</a>
     </li></ul></dd>
     
 
@@ -1433,7 +1399,7 @@ console.log(obj.annualEarning())</code></pre>
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="index.js.html">index.js</a>, <a href="index.js.html#line202">line 202</a>
+        <a href="index.js.html">index.js</a>, <a href="index.js.html#line164">line 164</a>
     </li></ul></dd>
     
 
@@ -1526,7 +1492,7 @@ console.log(obj.annualEarning())</code></pre>
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="index.js.html">index.js</a>, <a href="index.js.html#line138">line 138</a>
+        <a href="index.js.html">index.js</a>, <a href="index.js.html#line100">line 100</a>
     </li></ul></dd>
     
 
@@ -1662,7 +1628,7 @@ console.log(obj.annualEarning())</code></pre>
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="index.js.html">index.js</a>, <a href="index.js.html#line155">line 155</a>
+        <a href="index.js.html">index.js</a>, <a href="index.js.html#line117">line 117</a>
     </li></ul></dd>
     
 
@@ -1801,7 +1767,7 @@ console.log(obj.annualEarning())</code></pre>
 <br class="clear">
 
 <footer>
-    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.6.6</a> on Tue Jan 05 2021 20:04:11 GMT+0530 (India Standard Time) using the <a href="https://github.com/clenemt/docdash">docdash</a> theme.
+    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.6.6</a> on Mon Jan 11 2021 18:49:22 GMT+0530 (India Standard Time) using the <a href="https://github.com/clenemt/docdash">docdash</a> theme.
 </footer>
 
 <script>prettyPrint();</script>

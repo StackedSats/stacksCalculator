@@ -15,7 +15,8 @@ require("dotenv").config();
  *
  * @example
  * const obj = new Calculator();
- * obj.init();
+ * await obj.init();
+ * obj.setUserHolding(100000);
  * console.log(obj.annualEarning())
  */
 
@@ -54,29 +55,16 @@ class Calculator {
 
   /**
    * @constructor
-   * @param {string} apiKey The Api Key for coinmarketcap
    * @param {number=} [numMin=10] If the user wants to specify the number of minros
    * @param {minShare=} [minShare=0.15] To change the miners share of excess values.
    */
 
-  constructor(apiKey, numMin, minShare) {
+  constructor(numMin, minShare) {
     if (numMin) {
       this.numberOfMiners = numMin;
     }
     if (minShare) {
       this.minersShareOfExcessValue = minShare;
-    }
-    try {
-      if (apiKey) {
-        this.coinMarketCapApiKey = apiKey;
-      } else if (process.env.NODE_ENV === "dev")
-        this.coinMarketCapApiKey = process.env.coinmarketcap;
-      else {
-        throw new EvalError();
-      }
-      // console.log(this.coinMarketCapApiKey);
-    } catch (e) {
-      console.error(e);
     }
   }
 
@@ -86,7 +74,9 @@ class Calculator {
    */
   async init() {
     try {
-      const result = await axios.get("http://207.148.25.63:3500/data");
+      let result = await axios.get("http://207.148.25.63:3500/data");
+      result = result.data;
+      console.log(result);
       this.stxusd = result["stxusd"];
       this.btcusd = result["btcusd"];
       this.stxTransactionFee = result["stxTransactionFeeReult"];
@@ -242,9 +232,7 @@ class Calculator {
 module.exports = Calculator;
 
 const obj = new Calculator();
-obj.BTCTokenPrice(1000);
-obj.STXTokenPrice(10);
-obj.STXTransferFee(30);
-obj.setUserHolding(100000);
-obj.BTCTransferFee(10);
-console.log(obj.annualEarning());
+obj.init().then(() => {
+  obj.setUserHolding(100000);
+  console.log(obj.annualEarning());
+});
