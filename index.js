@@ -176,11 +176,14 @@ class Calculator {
   }
 
   lengthOfRewardCycle() {
-    return this.numberOfStxBlockPerRewardCycle / this.stxBlockPerDay;
+    return Math.round(
+      this.numberOfStxBlockPerRewardCycle / this.stxBlockPerDay,
+      10
+    );
   }
 
   minStackingSize() {
-    return Math.min(
+    return Math.ceil(
       this.percentageOfSupplyStacked < 0.25
         ? (this.liquidStxSupply / this.slotsAvalaiblePerRewardCycle()) * 0.25
         : (this.liquidStxSupply / this.slotsAvalaiblePerRewardCycle()) *
@@ -210,7 +213,7 @@ class Calculator {
   }
 
   dollarValue() {
-    return this.userHolding() * this.stxusd;
+    return this.userHolding * this.stxusd;
   }
 
   /**
@@ -241,8 +244,33 @@ class Calculator {
 
 module.exports = Calculator;
 
-const obj = new Calculator();
-obj.init().then(() => {
-  obj.setUserHolding(100000);
-  console.log(obj.annualEarning());
-});
+// const obj = new Calculator();
+// obj.stxusd = 0.5;
+// obj.btcusd = 30000;
+// obj.btcTxFee = 100;
+// obj.blockReward = 1000;
+// obj.stxTransactionFee = 100;
+// console.log("totalReward", obj.totalReward());
+// obj.stackingAddressPerBlock = 2;
+// console.log("poxTransactionSize", obj.poxTransactionSize());
+// console.log("txcallperminer", obj.txCostPerMinerPerBlock());
+// obj.numberOfMiners = 10;
+// obj.minersShareOfExcessValue = 0.15;
+// console.log("btctxcost", obj.btcTxCose());
+// console.log("excess value to be distributed", obj.excessValueToBeDistributed());
+// console.log("miners share", obj.minersShare());
+// console.log("stackers share", obj.stackersShare());
+// console.log("share per stacking address", obj.sharePerStackingAddress());
+// obj.numberOfStxBlockPerRewardCycle = 2000;
+// console.log(obj.slotsAvalaiblePerRewardCycle());
+// obj.stxBlockPerDay = 144;
+// console.log("lengthofreardcycle", obj.lengthOfRewardCycle());
+// obj.liquidStxSupply = 852000000;
+// obj.percentageOfSupplyStacked = 0.5;
+// console.log("minstackingsize", obj.minStackingSize());
+// obj.userHolding = 1100000;
+// console.log(obj.dollarValue());
+// console.log(obj.usersSlotsPerCycle());
+// console.log(obj.annualEarningInBTC());
+// console.log(obj.annualEarning());
+// console.log(obj.annualEarningPercentage() / 100);
