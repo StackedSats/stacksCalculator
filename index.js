@@ -274,3 +274,8 @@ module.exports = Calculator;
 // console.log(obj.annualEarningInBTC());
 // console.log(obj.annualEarning());
 // console.log(obj.annualEarningPercentage() / 100);
+const obj = new Calculator();
+obj.init().then(() => {
+  obj.setUserHolding(100000);
+  console.log(obj.annualEarning());
+});
