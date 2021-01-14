@@ -43,7 +43,7 @@ app.get("/data", async (req, res) => {
 
     const liquidStxSupply = axios({
       method: "get",
-      url: "  https://stacks-node-api.blockstack.org/v2/pox",
+      url: "https://explorer-api.blockstack.org/api/v2/total-supply",
     });
 
     const btcTxFee = axios({
@@ -62,7 +62,7 @@ app.get("/data", async (req, res) => {
       btcusd = result[0].data.data.BTC.quote.USD.price;
       stxusd = result[1].data.data.STX.quote.USD.price;
       stxTransactionFeeReult = result[2].data;
-      liquidStxSupplyResult = result[3].data.total_liquid_supply_ustx;
+      liquidStxSupplyResult = result[3].data.unlockedPercent;
       btcTxFeeResult = result[4].data.estimates[30].total.p2wpkh.usd;
       const fresult = {
         stxusd,
