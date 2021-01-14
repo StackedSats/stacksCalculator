@@ -62,7 +62,7 @@ app.get("/data", async (req, res) => {
       btcusd = result[0].data.data.BTC.quote.USD.price;
       stxusd = result[1].data.data.STX.quote.USD.price;
       stxTransactionFeeReult = result[2].data;
-      liquidStxSupplyResult = result[3].data.unlockedPercent;
+      liquidStxSupplyResult = result[3].data.totalStacks;
       btcTxFeeResult = result[4].data.estimates[30].total.p2wpkh.usd;
       const fresult = {
         stxusd,
