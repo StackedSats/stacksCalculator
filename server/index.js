@@ -2,6 +2,7 @@ const express = require("express");
 const cors = require("cors");
 const axios = require("axios");
 const dotenv = require("dotenv");
+require("https").globalAgent.options.ca = require("ssl-root-cas").create();
 dotenv.config();
 const app = express();
 
@@ -38,12 +39,12 @@ app.get("/data", async (req, res) => {
 
     const stxTransferFee = axios({
       method: "get",
-      url: "https://stacks-node-api.blockstack.org/v2/fees/transfer",
+      url: "https://stacks-node-api.testnet.stacks.co/v2/fees/transfer",
     });
 
     const liquidStxSupply = axios({
       method: "get",
-      url: "https://explorer-api.blockstack.org/api/v2/total-supply",
+      url: "https://stacks-node-api.testnet.stacks.co/v2/pox",
     });
 
     const btcTxFee = axios({
@@ -62,7 +63,8 @@ app.get("/data", async (req, res) => {
       btcusd = result[0].data.data.BTC.quote.USD.price;
       stxusd = result[1].data.data.STX.quote.USD.price;
       stxTransactionFeeReult = result[2].data;
-      liquidStxSupplyResult = parseInt(result[3].data.totalStacks);
+      liquidStxSupplyResult =
+        parseInt(result[3].data.total_liquid_supply_ustx) / 1000000;
       btcTxFeeResult = result[4].data.estimates[30].total.p2wpkh.usd;
       const fresult = {
         stxusd,
